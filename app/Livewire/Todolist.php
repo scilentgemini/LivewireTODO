@@ -16,23 +16,31 @@ class Todolist extends Component
 
     public $search;
 
-    public function create(){
+    public function create()
+    {
         $validated = $this->validateOnly('name');
 
         Todo::create($validated);
 
-        $this -> reset('name');
+        $this->reset('name');
 
         session()->flash('success', 'Created!');
     }
 
-public function delete($todoID){
-    Todo::find($todoID)->delete();
-}
+    public function delete($todoID)
+    {
+        Todo::find($todoID)->delete();
+    }
+
+    public function toggle($todoID){
+        $todo = Todo::find($todoID);
+        $todo->completed = !$todo->completed;
+        $todo->save();
+    }
 
     public function render()
     {
-        return view('livewire.todolist',[
+        return view('livewire.todolist', [
             'todos' => Todo::latest()->where('name', 'like', "%{$this->search}%")->paginate(3)
         ]);
     }
