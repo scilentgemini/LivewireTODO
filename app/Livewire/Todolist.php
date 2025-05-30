@@ -29,7 +29,7 @@ class Todolist extends Component
     public function render()
     {
         return view('livewire.todolist',[
-            'todos' => Todo::latest()->paginate()
+            'todos' => Todo::latest()->where('name', 'like', "%{$this->search}%")->paginate(3)
         ]);
     }
 }
