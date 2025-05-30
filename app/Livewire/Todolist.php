@@ -30,6 +30,7 @@ class Todolist extends Component
         $this->reset('name');
 
         session()->flash('success', 'Created!');
+        $this->resetPage();
     }
 
     public function delete($todoID)
